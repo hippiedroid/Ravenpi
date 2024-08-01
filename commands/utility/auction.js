@@ -5,6 +5,10 @@ module.exports = {
     .setName('auction')
     .setDescription('Auction options')
     .addStringOption(option =>
+      option.setName('title')
+        .setDescription('Enter the title of the bid.')
+        .setRequired(true))
+    .addStringOption(option =>
       option.setName('start_bid')
         .setDescription('Enter the starting bid and begin the auction.')
         .setRequired(true))
@@ -20,7 +24,7 @@ module.exports = {
     const allowedChannelId = '1267046400043253773';
 
     if (interaction.channelId !== allowedChannelId) {
-      await interaction.reply({ content: `Admin gang, use the <#1268612769737867285> channel, smh.`, ephemeral: true });
+      await interaction.reply({ content: `Admin gang, use the <#1267046400043253773> channel, smh.`, ephemeral: true });
       return;
     }
 
@@ -30,6 +34,7 @@ module.exports = {
       return;
     }
 
+    const title = interaction.options.getString("title");
     let startBid = Number(interaction.options.getString("start_bid"));
     const timerInput = Number(interaction.options.getString("timer"));
     const img = interaction.options.getString("image") || 'https://steamuserimages-a.akamaihd.net/ugc/2438207173318702003/C18C6B6482FC7CD550E9654CB7BA8B7260B06604/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false';
@@ -78,9 +83,9 @@ module.exports = {
     const row = new ActionRowBuilder()
       .addComponents(increment_100000, increment_250000, increment_500000, increment_1000000, deleteAuction);
 
-    const createEmbed = (bidder, img) => new EmbedBuilder()
+    const createEmbed = (title, bidder, img) => new EmbedBuilder()
       .setColor(0x0099ff)
-      .setTitle("Player Base | Player Vehicle Auction!")
+      .setTitle(title)
       .setAuthor({
         name: "Winter Hideout Auctions",
       })
@@ -103,7 +108,7 @@ module.exports = {
       });
 
     bidder = `Bid will start at ${startBid.toLocaleString()}`;
-    const auctionEmbed = createEmbed(bidder, img);
+    const auctionEmbed = createEmbed(title, bidder, img);
     const response = await interaction.reply({ embeds: [auctionEmbed], components: [row] });
 
     const collector = response.createMessageComponentCollector({ componentType: ComponentType.Button });
@@ -138,7 +143,7 @@ module.exports = {
 
       counter += 1;
       bidder = `${startBid.toLocaleString()} Nova Coins by <@${i.user.id}>`;
-      const updatedEmbed = createEmbed(bidder, img);
+      const updatedEmbed = createEmbed(title, bidder, img);
       await i.update({ embeds: [updatedEmbed], components: [row] });
 
       console.log(i.customId);
@@ -153,7 +158,7 @@ module.exports = {
         interaction.followUp({ content: 'Auction has been deleted.', ephemeral: true });
       } else {
         // Announce the winner
-        const winnerEmbed = createEmbed(`Auction ended. Winner: ${bidder}`, img);
+        const winnerEmbed = createEmbed(title, `Auction ended. Winner: ${bidder}`, img);
         await response.edit({ embeds: [winnerEmbed], components: [] });
         interaction.followUp({ content: `The auction has ended! Winner: ${bidder}` });
       }
