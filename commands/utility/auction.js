@@ -45,7 +45,7 @@ module.exports = {
     }
 
     if (isNaN(timerInput) || timerInput < 1) {
-      await interaction.reply({ content: `Make sure you din't put a letter and the auction is at least an hour!`, ephemeral: true });
+      await interaction.reply({ content: `Make sure you didn't put a letter and the auction is at least an hour!`, ephemeral: true });
       return;
     }
 
