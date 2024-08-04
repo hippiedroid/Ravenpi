@@ -50,7 +50,7 @@ module.exports = {
         return;
       }
 
-      const timer = timerInput * 60 * 60 * 1000;
+      const timer = timerInput;
       let bidder = `Bid will start at ${startBid.toLocaleString()}`;
       let counter = 0;
 
