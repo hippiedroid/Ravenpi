@@ -2,3 +2,5 @@
 node_modules
 # Environment variables
 .env
+readingJSON.js
+commands/utility/balance.js
