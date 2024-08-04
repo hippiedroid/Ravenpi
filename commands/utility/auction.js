@@ -21,8 +21,8 @@ module.exports = {
         .setDescription('URL of image')),
   async execute(interaction) {
     try {
-      const allowedRoleId = ['1268261485595988121', '1189343657657126934'];
-      const allowedChannelId = '1255011763863294115';
+      const allowedRoleId = ['1258791048520667267', '1251952830055710751'];
+      const allowedChannelId = '1267046400043253773';
 
       if (interaction.channelId !== allowedChannelId) {
         await interaction.reply({ content: `Admin gang, use the <#1267046400043253773> channel, smh.`, ephemeral: true });
